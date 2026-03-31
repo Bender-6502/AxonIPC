@@ -2,5 +2,6 @@
 project ("AxonIPC")
 
 add_subdirectory ("AxonIPC")
+add_subdirectory ("AxonIPCExample")
 add_subdirectory ("AxonIPCTests")
 

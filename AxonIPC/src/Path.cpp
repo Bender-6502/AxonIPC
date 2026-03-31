@@ -5,7 +5,7 @@ namespace AxonIPC
 {
   Path::Path(const std::filesystem::path& path)
     : m_path(path)
-    , m_addr(CreatePathToAddr(m_path.string()))
+    , m_addr(CreatePathToAddr(m_path))
   {}
 
   Path::Path(const Path& other) noexcept

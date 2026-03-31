@@ -2,7 +2,6 @@
 #include "Socket.h"
 #include "Path.h"
 #include <string_view>
-#include <span>
 #include <array>
 #include <mutex>
 

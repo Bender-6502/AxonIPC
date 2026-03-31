@@ -50,7 +50,6 @@ namespace AxonIPC
     std::memset(addr, 0, sizeof(sockaddr_un));
     addr->sun_family = AF_UNIX;
     path.string().copy(addr->sun_path, sizeof(addr->sun_path) - 1);
-
     return addr;
 #else
     return nullptr;

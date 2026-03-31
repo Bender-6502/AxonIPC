@@ -16,6 +16,7 @@ namespace AxonIPC
             std::string_view payload;
             m_subscriber.Receive(type, payload);
             m_disp.Dispatch(type, payload);
+            std::this_thread::yield();
           }
         }
         catch (...) {}

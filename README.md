@@ -18,5 +18,70 @@
 ## Testing
 - Google tests and mocks
 
+## How to use
+Two programs, North and South, both residing in the same directory so each one can find the unix socket path
+```cpp
+// Program called North
+#include "AxonIPC/Context.h"
+#include "AxonIPC/AxonIPCSubscriber.h"
+#include "AxonIPC/AxonIPCPublisher.h"
+#include <string>
+#include <iostream>
+int main()
+{
+    AxonIPC::PlatformContext subscriberContext;
+    AxonIPC::AxonIPCSubscriber subscriber(subscriberContext, AxonIPC::Path("./north"));
+    subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& payload)
+    {
+      std::cout << payload << std::endl;
+    });
+
+    AxonIPC::PlatformContext publisherContext;
+    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./south"));
+    std::cout << "Enter \"exit\" to exit." << std::endl;
+    while(true)
+    {
+        std::cout << "Payload: ";
+        std::string payload;
+        std::cin >> payload;
+        if (payload == "exit")
+            break;
+
+        publisher.Publish(42, payload);
+    }
+}
+```
+
+```cpp
+// Program called South
+#include "AxonIPC/Context.h"
+#include "AxonIPC/AxonIPCSubscriber.h"
+#include "AxonIPC/AxonIPCPublisher.h"
+#include <string>
+#include <iostream>
+int main()
+{
+    AxonIPC::PlatformContext subscriberContext;
+    AxonIPC::AxonIPCSubscriber subscriber(subscriberContext, AxonIPC::Path("./south"));
+    subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& payload)
+    {
+      std::cout << payload << std::endl;
+    });
+
+    AxonIPC::PlatformContext publisherContext;
+    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./north"));
+    std::cout << "Enter \"exit\" to exit." << std::endl;
+    while(true)
+    {
+        std::cout << "Payload: ";
+        std::string payload;
+        std::cin >> payload;
+        if (payload == "exit")
+            break;
+
+        publisher.Publish(42, payload);
+    }
+}
+```
 > [!NOTE]
 > When using AF_UNIX with SOCK_DGRAM on Linux, we are guaranteed to receive a full packet in a single read call, provided the buffer is large enough. Unlike standard UDP over a network, Unix domain datagram sockets on Linux are always reliable and do not reorder or drop packets under normal conditions.

@@ -2,11 +2,6 @@
 #include "Subscriber.h"
 #include "Dispatcher.h"
 #include <thread>
-#include <condition_variable>
-#include <mutex>
-#include <map>
-#include <functional>
-#include <string_view>
 
 namespace AxonIPC
 {
