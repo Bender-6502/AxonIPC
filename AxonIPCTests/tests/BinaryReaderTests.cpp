@@ -6,7 +6,7 @@
 
 TEST(BinaryReaderTests, Test)
 {
-  constexpr unsigned long value = 0;
+  constexpr unsigned int value = 0;
 
   std::array<char, 1000> arr{};
   AxonIPC::BinaryWriter writer(arr);
@@ -16,7 +16,7 @@ TEST(BinaryReaderTests, Test)
   writer.Write(std::string_view("Hello Moon"));
   EXPECT_EQ(writer.Size(), 62);
 
-  unsigned long val = 0;
+  unsigned int val = 0;
   std::string_view str1, str2, str3;
   AxonIPC::BinaryReader reader(std::span<char>(arr.data(), writer.Size()));
 

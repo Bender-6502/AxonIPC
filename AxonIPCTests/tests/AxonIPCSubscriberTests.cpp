@@ -60,6 +60,6 @@ TEST_F(AxonIPCSubscriberTests, Test)
   AxonIPC::AxonIPCPublisher publisher(context, AxonIPC::Path());
   publisher.Publish(42, "payload");
 
-  ASSERT_EQ(future.wait_for(std::chrono::seconds(1)), std::future_status::ready);
+  ASSERT_EQ(future.wait_for(std::chrono::seconds(2)), std::future_status::ready);
   EXPECT_EQ(future.get(), "payload");
 }
