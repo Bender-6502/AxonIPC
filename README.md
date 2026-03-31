@@ -19,7 +19,7 @@
 - Google tests and mocks
 
 ## How to use
-Two programs, North and South, both residing in the same directory so each one can find the unix socket path
+Two programs, North and South, both residing in the same directory so each one can find the unix socket path of the opposing program.
 ```cpp
 // Program called North
 #include "AxonIPC/Context.h"
@@ -31,10 +31,11 @@ int main()
 {
     AxonIPC::PlatformContext subscriberContext;
     AxonIPC::AxonIPCSubscriber subscriber(subscriberContext, AxonIPC::Path("./north"));
-    subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& payload)
-    {
-      std::cout << payload << std::endl;
-    });
+    subscriber.GetDispatcher()->RegisterSubscriber(42, [&]
+      (const int type, const std::string_view& payload)
+        {
+          std::cout << payload << std::endl;
+        });
 
     AxonIPC::PlatformContext publisherContext;
     AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./south"));
@@ -63,10 +64,11 @@ int main()
 {
     AxonIPC::PlatformContext subscriberContext;
     AxonIPC::AxonIPCSubscriber subscriber(subscriberContext, AxonIPC::Path("./south"));
-    subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& payload)
-    {
-      std::cout << payload << std::endl;
-    });
+    subscriber.GetDispatcher()->RegisterSubscriber(42, [&]
+      (const int type, const std::string_view& payload)
+        {
+          std::cout << payload << std::endl;
+        });
 
     AxonIPC::PlatformContext publisherContext;
     AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./north"));
