@@ -1,8 +1,9 @@
 #pragma once
 #include "Socket.h"
 #include "Path.h"
-#include <span>
 #include <string_view>
+#include <span>
+#include <array>
 #include <mutex>
 
 namespace AxonIPC

@@ -4,22 +4,22 @@
 
 namespace AxonIPC
 {
-    class AxonIPCPublisher
-    {
-    public:
-        AxonIPCPublisher() = default;
-        AxonIPCPublisher(Context& context, const Path& path);
-        AxonIPCPublisher(const AxonIPCPublisher&) = delete;
-        AxonIPCPublisher(AxonIPCPublisher&& other) noexcept;
-        AxonIPCPublisher& operator=(const AxonIPCPublisher&) = delete;
-        AxonIPCPublisher& operator=(AxonIPCPublisher&& other) noexcept;
-       ~AxonIPCPublisher() = default;
+  class AxonIPCPublisher
+  {
+  public:
+    AxonIPCPublisher() = default;
+    AxonIPCPublisher(Context& context, const Path& path);
+    AxonIPCPublisher(const AxonIPCPublisher&) = delete;
+    AxonIPCPublisher(AxonIPCPublisher&& other) noexcept;
+    AxonIPCPublisher& operator=(const AxonIPCPublisher&) = delete;
+    AxonIPCPublisher& operator=(AxonIPCPublisher&& other) noexcept;
+   ~AxonIPCPublisher() = default;
 
-        void Swap(AxonIPCPublisher& other);
+    void Swap(AxonIPCPublisher& other);
 
-        void Publish(int type, const std::string_view& payload);
+    void Publish(int type, const std::string_view& payload);
 
-    private:
-        Publisher m_publisher;
-    };
+  private:
+    Publisher m_publisher;
+  };
 }

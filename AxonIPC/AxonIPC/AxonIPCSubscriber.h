@@ -10,25 +10,25 @@
 
 namespace AxonIPC
 {
-    class AxonIPCSubscriber
-    {
-    public:
-        AxonIPCSubscriber() = default;
-        AxonIPCSubscriber(const AxonIPCSubscriber&) = delete;
-        AxonIPCSubscriber(Context& context, const Path& path);
-        AxonIPCSubscriber(AxonIPCSubscriber&& other) noexcept;
-        AxonIPCSubscriber& operator=(const AxonIPCSubscriber&) = delete;
-        AxonIPCSubscriber& operator=(AxonIPCSubscriber&& other) noexcept;
-       ~AxonIPCSubscriber();
+  class AxonIPCSubscriber
+  {
+  public:
+    AxonIPCSubscriber() = default;
+    AxonIPCSubscriber(const AxonIPCSubscriber&) = delete;
+    AxonIPCSubscriber(Context& context, const Path& path);
+    AxonIPCSubscriber(AxonIPCSubscriber&& other) noexcept;
+    AxonIPCSubscriber& operator=(const AxonIPCSubscriber&) = delete;
+    AxonIPCSubscriber& operator=(AxonIPCSubscriber&& other) noexcept;
+   ~AxonIPCSubscriber();
 
-        void Swap(AxonIPCSubscriber& other);
+    void Swap(AxonIPCSubscriber& other);
 
-        Dispatcher* GetDispatcher();
+    Dispatcher* GetDispatcher();
 
-    private:
-        Subscriber m_subscriber;
-        Dispatcher m_disp;
-        bool m_abort = false;
-        std::thread m_thread{};
-    };
+  private:
+    Subscriber m_subscriber;
+    Dispatcher m_disp;
+    bool m_abort = false;
+    std::thread m_thread{};
+  };
 }

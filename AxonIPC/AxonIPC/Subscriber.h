@@ -3,6 +3,7 @@
 #include "Path.h"
 #include <string_view>
 #include <span>
+#include <array>
 
 namespace AxonIPC
 {
@@ -11,7 +12,6 @@ namespace AxonIPC
   class Subscriber
   {
   public:
-
     Subscriber() = default;
     Subscriber(Context& context, const Path& path);
     Subscriber(const Subscriber&) = delete;

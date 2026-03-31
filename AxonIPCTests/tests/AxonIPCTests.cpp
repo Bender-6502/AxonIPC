@@ -42,7 +42,7 @@ public:
   std::string sent;
 };
 
-TEST_F(AxonIPCTests, MSQueueSubscribe)
+TEST_F(AxonIPCTests, AxonIPCSubscribe)
 {
   // Arrange
   int type = 0;
