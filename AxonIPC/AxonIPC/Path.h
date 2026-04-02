@@ -10,6 +10,7 @@ namespace AxonIPC
     Path(const std::filesystem::path& path);
     Path(const Path& other) noexcept;
     Path(Path&& other) noexcept;
+    Path& operator=(const std::filesystem::path& other) noexcept;
     Path& operator=(const Path& other) noexcept;
     Path& operator=(Path&& other) noexcept;
    ~Path();

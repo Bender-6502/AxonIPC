@@ -3,8 +3,8 @@
 
 namespace AxonIPC
 {
-  AxonIPCSubscriber::AxonIPCSubscriber(Context& context, const Path& path)
-    : m_subscriber(context, path)
+  AxonIPCSubscriber::AxonIPCSubscriber(Context& context, const Path& subscriberPath)
+    : m_subscriber(context, subscriberPath)
   {
     m_thread = std::thread([&]
       {
@@ -13,9 +13,9 @@ namespace AxonIPC
           while (!m_abort)
           {
             int type{};
-            std::string_view payload;
-            m_subscriber.Receive(type, payload);
-            m_disp.Dispatch(type, payload);
+            std::string_view publisher, payload;
+            m_subscriber.Receive(type, publisher, payload);
+            m_disp.Dispatch(type, publisher, payload);
             std::this_thread::yield();
           }
         }

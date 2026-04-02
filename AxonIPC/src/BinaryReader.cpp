@@ -1,4 +1,6 @@
 #include "BinaryReader.h"
+#include "Path.h"
+#include <filesystem>
 
 namespace AxonIPC
 {
@@ -8,7 +10,7 @@ namespace AxonIPC
   {}
 
   BinaryReader::BinaryReader(BinaryReader&& other) noexcept
-    : m_data(std::move(other.m_data))
+    : m_data(other.m_data)
     , m_cursor(other.m_cursor)
   {
     other.m_cursor = {};
@@ -24,6 +26,13 @@ namespace AxonIPC
   {
     std::swap(m_data, other.m_data);
     std::swap(m_cursor, other.m_cursor);
+  }
+
+  void BinaryReader::Read(Path& val)
+  {
+    std::string temp;
+    Read(temp);
+    val = std::filesystem::path(temp);
   }
 
   void BinaryReader::Read(std::string_view& val)

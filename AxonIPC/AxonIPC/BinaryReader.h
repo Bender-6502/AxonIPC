@@ -6,6 +6,7 @@
 
 namespace AxonIPC
 {
+  class Path;
   class BinaryReader
   {
   public:
@@ -29,6 +30,7 @@ namespace AxonIPC
       m_cursor += sizeof(T);
     }
 
+    void Read(Path& val);
     void Read(std::string_view& val);
     void Read(std::string& val);
 

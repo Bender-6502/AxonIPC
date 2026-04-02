@@ -64,13 +64,14 @@ TEST_F(AxonIPCSubscriberTests, Test)
   std::promise<std::string> promise;
   auto future = promise.get_future();
 
-  AxonIPC::AxonIPCSubscriber subscriber(context, AxonIPC::Path());
-  subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& payload)
+  AxonIPC::AxonIPCSubscriber subscriber(context, AxonIPC::Path("east"));
+  subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& publisher, const std::string_view& payload)
     {
+      EXPECT_EQ(publisher, "west");
       promise.set_value(std::string(payload.data(), payload.size()));
     });
 
-  AxonIPC::AxonIPCPublisher publisher(context, AxonIPC::Path());
+  AxonIPC::AxonIPCPublisher publisher(context, AxonIPC::Path("west"), AxonIPC::Path("east"));
   publisher.Publish(42, "payload");
 
   ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);

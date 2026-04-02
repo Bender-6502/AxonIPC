@@ -46,14 +46,14 @@ TEST_F(AxonIPCTests, AxonIPCSubscribe)
 {
   // Arrange
   int type = 0;
-  std::string_view payload;
+  std::string_view publisherPath, payload;
 
-  AxonIPC::Publisher publisher(context, AxonIPC::Path());
+  AxonIPC::Publisher publisher(context, AxonIPC::Path(), AxonIPC::Path());
   AxonIPC::Subscriber subscriber(context, AxonIPC::Path());
 
   // Act
   publisher.Publish(42, "Serialize");
-  subscriber.Receive(type, payload);
+  subscriber.Receive(type, publisherPath, payload);
 
   // Assert
   EXPECT_EQ(type, 42);

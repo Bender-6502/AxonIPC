@@ -10,7 +10,7 @@ namespace AxonIPC
   public:
     AxonIPCSubscriber() = default;
     AxonIPCSubscriber(const AxonIPCSubscriber&) = delete;
-    AxonIPCSubscriber(Context& context, const Path& path);
+    AxonIPCSubscriber(Context& context, const Path& subscriberPath);
     AxonIPCSubscriber(AxonIPCSubscriber&& other) noexcept;
     AxonIPCSubscriber& operator=(const AxonIPCSubscriber&) = delete;
     AxonIPCSubscriber& operator=(AxonIPCSubscriber&& other) noexcept;

@@ -1,4 +1,5 @@
 #include "BinaryWriter.h"
+#include "Path.h"
 #include <cstring>
 
 namespace AxonIPC
@@ -24,6 +25,11 @@ namespace AxonIPC
   {
     std::swap(m_data, other.m_data);
     std::swap(m_cursor, other.m_cursor);
+  }
+
+  void BinaryWriter::Write(const Path& val)
+  {
+    Write(val.NativePath().string());
   }
 
   void BinaryWriter::Write(const std::string_view& val)

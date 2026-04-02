@@ -2,8 +2,8 @@
 
 namespace AxonIPC
 {
-  AxonIPCPublisher::AxonIPCPublisher(Context& context, const Path& path)
-    : m_publisher(context, path)
+  AxonIPCPublisher::AxonIPCPublisher(Context& context, const Path& subscriberPath, const Path& publisherPath)
+    : m_publisher(context, subscriberPath, publisherPath)
   {}
 
   AxonIPCPublisher::AxonIPCPublisher(AxonIPCPublisher&& other) noexcept

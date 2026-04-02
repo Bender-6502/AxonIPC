@@ -38,7 +38,7 @@ int main()
         });
 
     AxonIPC::PlatformContext publisherContext;
-    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./south"));
+    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./north"), AxonIPC::Path("./south"));
     std::cout << "Enter \"exit\" to exit." << std::endl;
     while(true)
     {
@@ -71,7 +71,7 @@ int main()
         });
 
     AxonIPC::PlatformContext publisherContext;
-    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./north"));
+    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./south"), AxonIPC::Path("./north"));
     std::cout << "Enter \"exit\" to exit." << std::endl;
     while(true)
     {

@@ -8,7 +8,7 @@ namespace AxonIPC
   {
   public:
     AxonIPCPublisher() = default;
-    AxonIPCPublisher(Context& context, const Path& path);
+    AxonIPCPublisher(Context& context, const Path& subscriberPath, const Path& publisherPath);
     AxonIPCPublisher(const AxonIPCPublisher&) = delete;
     AxonIPCPublisher(AxonIPCPublisher&& other) noexcept;
     AxonIPCPublisher& operator=(const AxonIPCPublisher&) = delete;

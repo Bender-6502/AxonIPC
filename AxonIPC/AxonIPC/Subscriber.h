@@ -12,7 +12,7 @@ namespace AxonIPC
   {
   public:
     Subscriber() = default;
-    Subscriber(Context& context, const Path& path);
+    Subscriber(Context& context, const Path& subscriberPath);
     Subscriber(const Subscriber&) = delete;
     Subscriber(Subscriber&& other) noexcept;
     Subscriber& operator=(const Subscriber&) = delete;
@@ -23,11 +23,11 @@ namespace AxonIPC
 
     void OpenUp();
     void ShutDown();
-    void Receive(int& type, std::string_view& payload);
+    void Receive(int& type, std::string_view& publisher, std::string_view& payload);
 
   private:
     Socket m_socket{};
-    Path m_path{};
+    Path m_subscriberPath{};
     std::array<char, SubscriberBufferSize> m_buf{};
   };
 }

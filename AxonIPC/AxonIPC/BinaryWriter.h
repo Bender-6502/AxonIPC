@@ -6,6 +6,7 @@
 
 namespace AxonIPC
 {
+  class Path;
   class BinaryWriter
   {
   public:
@@ -29,6 +30,7 @@ namespace AxonIPC
       m_cursor += sizeof(T);
     }
 
+    void Write(const Path& val);
     void Write(const std::string_view& val);
     void Write(const std::string& val);
     void Write(const char* val);

@@ -20,6 +20,12 @@ namespace AxonIPC
     other.m_addr = nullptr;
   }
 
+  Path& Path::operator=(const std::filesystem::path& other) noexcept
+  {
+    Path(other).Swap(*this);
+    return *this;
+  }
+
   Path& Path::operator=(const Path& other) noexcept
   {
     Path(other).Swap(*this);

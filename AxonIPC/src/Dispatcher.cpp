@@ -17,11 +17,11 @@ namespace AxonIPC
     std::swap(m_subscribers, other.m_subscribers);
   }
 
-  void Dispatcher::Dispatch(const int type, const std::string_view& payload)
+  void Dispatcher::Dispatch(const int type, const std::string_view& publisher, const std::string_view& payload)
   {
     std::unique_lock<std::mutex> lock(m_mutex);
     if (const auto sub = m_subscribers.find(type); sub != m_subscribers.end())
-      sub->second(type, payload);
+      sub->second(type, publisher, payload);
   }
 
   void Dispatcher::DeRegisterSubscriber(const int type)

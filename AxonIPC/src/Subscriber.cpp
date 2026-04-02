@@ -8,16 +8,16 @@
 
 namespace AxonIPC
 {
-  Subscriber::Subscriber(Context& context, const Path& path)
+  Subscriber::Subscriber(Context& context, const Path& subscriberPath)
     : m_socket(context)
-    , m_path(path)
+    , m_subscriberPath(subscriberPath)
   {
     OpenUp();
   }
 
   Subscriber::Subscriber(Subscriber&& other) noexcept
     : m_socket(std::move(other.m_socket))
-    , m_path(std::move(other.m_path))
+    , m_subscriberPath(std::move(other.m_subscriberPath))
   {}
 
   Subscriber& Subscriber::operator=(Subscriber&& other) noexcept
@@ -34,24 +34,24 @@ namespace AxonIPC
   void Subscriber::Swap(Subscriber& other)
   {
     std::swap(m_socket, other.m_socket);
-    std::swap(m_path, other.m_path);
+    std::swap(m_subscriberPath, other.m_subscriberPath);
   }
 
   void Subscriber::OpenUp()
   {
-    if (!m_socket.ContextHandle()->Bind(m_socket.SocketHandle(), m_path))
+    if (!m_socket.ContextHandle()->Bind(m_socket.SocketHandle(), m_subscriberPath))
       throw std::runtime_error(std::format("Failed to subscribe: {}", m_socket.ContextHandle()->LastErrorCode()));
   }
 
   void Subscriber::ShutDown()
   {
     if (m_socket) {
-      m_socket.ContextHandle()->Unbind(m_path);
+      m_socket.ContextHandle()->Unbind(m_subscriberPath);
       m_socket.CloseSocket();
     }
   }
 
-  void Subscriber::Receive(int& type, std::string_view& payload)
+  void Subscriber::Receive(int& type, std::string_view& publisher, std::string_view& payload)
   {
     size_t bytesRead = 0;
 
@@ -62,6 +62,7 @@ namespace AxonIPC
     // Extract the members from the packet
     BinaryReader reader(std::span<char>(m_buf.data(), bytesRead));
     reader.Read(type);
+    reader.Read(publisher);
     reader.Read(payload);
   }
 }
