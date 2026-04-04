@@ -48,11 +48,11 @@ TEST_F(AxonIPCTests, AxonIPCSubscribe)
   int type = 0;
   std::string_view publisherPath, payload;
 
-  AxonIPC::Publisher publisher(context, AxonIPC::Path(), AxonIPC::Path());
+  AxonIPC::Publisher publisher(context, AxonIPC::Path());
   AxonIPC::Subscriber subscriber(context, AxonIPC::Path());
 
   // Act
-  publisher.Publish(42, "Serialize");
+  publisher.Publish(42, "Serialize", AxonIPC::Path());
   subscriber.Receive(type, publisherPath, payload);
 
   // Assert

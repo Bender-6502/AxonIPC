@@ -8,7 +8,7 @@ namespace AxonIPC
   {
   public:
     AxonIPCPublisher() = default;
-    AxonIPCPublisher(Context& context, const Path& subscriberPath, const Path& publisherPath);
+    AxonIPCPublisher(Context& context, const Path& subscriberPath);
     AxonIPCPublisher(const AxonIPCPublisher&) = delete;
     AxonIPCPublisher(AxonIPCPublisher&& other) noexcept;
     AxonIPCPublisher& operator=(const AxonIPCPublisher&) = delete;
@@ -17,7 +17,7 @@ namespace AxonIPC
 
     void Swap(AxonIPCPublisher& other);
 
-    void Publish(int type, const std::string_view& payload);
+    void Publish(int type, const std::string_view& payload, const Path& publisherPath);
 
   private:
     Publisher m_publisher;

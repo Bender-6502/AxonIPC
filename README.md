@@ -29,16 +29,14 @@ Two programs, North and South, both residing in the same directory so each one c
 #include <iostream>
 int main()
 {
-    AxonIPC::PlatformContext subscriberContext;
-    AxonIPC::AxonIPCSubscriber subscriber(subscriberContext, AxonIPC::Path("./north"));
-    subscriber.GetDispatcher()->RegisterSubscriber(42, [&]
-      (const int type, const std::string_view& payload)
-        {
-          std::cout << payload << std::endl;
-        });
+    AxonIPC::PlatformContext context;
+    AxonIPC::AxonIPCPublisher publisher(context, AxonIPC::Path("./north"));
+    AxonIPC::AxonIPCSubscriber subscriber(context, AxonIPC::Path("./north"));
+    subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& publisherPath, const std::string_view& payload)
+    {
+      std::cout << publisherPath << ": " << payload << std::endl;
+    });
 
-    AxonIPC::PlatformContext publisherContext;
-    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./north"), AxonIPC::Path("./south"));
     std::cout << "Enter \"exit\" to exit." << std::endl;
     while(true)
     {
@@ -48,7 +46,7 @@ int main()
         if (payload == "exit")
             break;
 
-        publisher.Publish(42, payload);
+        publisher.Publish(42, payload, AxonIPC::Path("./south"));
     }
 }
 ```
@@ -62,16 +60,14 @@ int main()
 #include <iostream>
 int main()
 {
-    AxonIPC::PlatformContext subscriberContext;
-    AxonIPC::AxonIPCSubscriber subscriber(subscriberContext, AxonIPC::Path("./south"));
-    subscriber.GetDispatcher()->RegisterSubscriber(42, [&]
-      (const int type, const std::string_view& payload)
-        {
-          std::cout << payload << std::endl;
-        });
+    AxonIPC::PlatformContext context;
+    AxonIPC::AxonIPCPublisher publisher(context, AxonIPC::Path("./south"));
+    AxonIPC::AxonIPCSubscriber subscriber(context, AxonIPC::Path("./south"));
+    subscriber.GetDispatcher()->RegisterSubscriber(42, [&](const int type, const std::string_view& publisherPath, const std::string_view& payload)
+    {
+      std::cout << publisherPath << ": " << payload << std::endl;
+    });
 
-    AxonIPC::PlatformContext publisherContext;
-    AxonIPC::AxonIPCPublisher publisher(publisherContext, AxonIPC::Path("./south"), AxonIPC::Path("./north"));
     std::cout << "Enter \"exit\" to exit." << std::endl;
     while(true)
     {
@@ -81,7 +77,7 @@ int main()
         if (payload == "exit")
             break;
 
-        publisher.Publish(42, payload);
+        publisher.Publish(42, payload, AxonIPC::Path("./north"));
     }
 }
 ```

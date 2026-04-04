@@ -2,8 +2,8 @@
 
 namespace AxonIPC
 {
-  AxonIPCPublisher::AxonIPCPublisher(Context& context, const Path& subscriberPath, const Path& publisherPath)
-    : m_publisher(context, subscriberPath, publisherPath)
+  AxonIPCPublisher::AxonIPCPublisher(Context& context, const Path& subscriberPath)
+    : m_publisher(context, subscriberPath)
   {}
 
   AxonIPCPublisher::AxonIPCPublisher(AxonIPCPublisher&& other) noexcept
@@ -21,8 +21,8 @@ namespace AxonIPC
     std::swap(m_publisher, other.m_publisher);
   }
 
-  void AxonIPCPublisher::Publish(const int type, const std::string_view& payload)
+  void AxonIPCPublisher::Publish(const int type, const std::string_view& payload, const Path& publisherPath)
   {
-    m_publisher.Publish(type, payload);
+    m_publisher.Publish(type, payload, publisherPath);
   }
 }

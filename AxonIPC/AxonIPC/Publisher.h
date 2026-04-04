@@ -13,7 +13,7 @@ namespace AxonIPC
   {
   public:
     Publisher() = default;
-    Publisher(Context& context, const Path& subscriberPath, const Path& publisherPath);
+    Publisher(Context& context, const Path& subscriberPath);
     Publisher(const Publisher&) = delete;
     Publisher(Publisher&& other) noexcept;
     Publisher& operator=(const Publisher&) = delete;
@@ -22,11 +22,11 @@ namespace AxonIPC
 
     void Swap(Publisher& other);
 
-    void Publish(int type, const std::string_view& payload);
+    void Publish(int type, const std::string_view& payload, const Path& publisherPath);
 
   private:
     Socket m_socket{};
-    Path m_subscriberPath{}, m_publisherPath{};
+    Path m_subscriberPath{};
     std::array<char, PublisherBufferSize> m_buf{};
     std::mutex m_mutex;
   };

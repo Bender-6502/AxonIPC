@@ -71,8 +71,8 @@ TEST_F(AxonIPCSubscriberTests, Test)
       promise.set_value(std::string(payload.data(), payload.size()));
     });
 
-  AxonIPC::AxonIPCPublisher publisher(context, AxonIPC::Path("west"), AxonIPC::Path("east"));
-  publisher.Publish(42, "payload");
+  AxonIPC::AxonIPCPublisher publisher(context, AxonIPC::Path("west"));
+  publisher.Publish(42, "payload", AxonIPC::Path("east"));
 
   ASSERT_EQ(future.wait_for(std::chrono::seconds(5)), std::future_status::ready);
   EXPECT_EQ(future.get(), "payload");
